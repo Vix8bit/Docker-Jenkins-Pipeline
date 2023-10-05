@@ -28,12 +28,20 @@ post{
       always{
             sh 'docker rm -f mypycont'
             sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
-
-        }
-}
-
-}
-    
-
   
-
+  }
+ }
+}
+    stage(‘Gmail’)
+{
+steps
+  {
+    emailext body: “*$(currentBuild.currentResult}:* Job Name:
+‘S(env.J08_NANE) || Build Number: ${env.BUELD_UMBER)\n More
+information at: ${env.BUILD_URL)",
+ subject: "Declarative Pipeline Build Status",
+to: 'we.kesari@gmail.com’
+
+    }
+  }
+}
