@@ -20,10 +20,19 @@ pipeline {
           sh 'docker push $DOCKER_BFLASK_IMAGE'
         }
       }
-    }
-    
-  }
-
+    } 
+  stage('Gmail')
+{
+	steps
+	{
+		emailext body: "*${currentBuild.currentResult}:* Job Name: 
+                ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More 
+                information at: ${env.BUILD_URL}",
+		subject: 'Declarative Pipeline Build Status',
+		to: 'Pavankrishnan1993@gmail.com'
+	}
+}
+}
 post{
       always{
             sh 'docker rm -f mypycont'
@@ -32,14 +41,6 @@ post{
   }
  }
 }
-    stage(‘Gmail’) {
-     steps {
-      emailext body: “*$(currentBuild.currentResult}:*"
-      Job Name:$(env.J08_NANE) || Build Number: ${env.BUELD_UMBER)\n More
-       information at: ${env.BUILD_URL)",
-       subject: "Declarative Pipeline Build Status",
-       to: 'we.kesari@gmail.com’
-
-    }
-  }
-}
+
+
+
